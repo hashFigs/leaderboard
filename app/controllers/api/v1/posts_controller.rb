@@ -17,21 +17,24 @@ class Api::V1::PostsController < ApplicationController
   
     @user = User.find_by(login: params[:login])
    
-    if @user 
 
+    if @user 
       @post =Post.new(
         title: post_params[:title],
         body: post_params[:body],
         user_id: @user.id,
         ip: post_params[:ip]
       )
-
     else
-      @user = User.create(login: post_params[:login])
+      @user = User.create(login: params[:login])
+      puts 'SSSS'
+      puts @user
+      u = @user.save!
+
       @post =Post.new(
         title: post_params[:title],
         body: post_params[:body],
-        user_id: @user.id,
+        user_id: u.id,
         ip: post_params[:ip]
       )
     end 
@@ -39,9 +42,8 @@ class Api::V1::PostsController < ApplicationController
     if @post.save 
       render json: [@user, @post], status: 200
     else
-      render json: {error: "Error creating user"}
+      render json: {error: "Error creating post"}
     end
-
   end 
 
   private

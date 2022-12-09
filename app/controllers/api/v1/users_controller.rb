@@ -17,6 +17,17 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+
+
+  def ip_with_multiple_authors
+     authors = User.all[1..10]
+     ip = Post.all.first.ip
+
+    render json: { "ip": ip, "authors": authors }, status: 200
+  end
+
+  
+
   private
   def user_params
     params.require(:user).permit([
