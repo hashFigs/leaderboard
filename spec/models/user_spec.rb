@@ -1,12 +1,13 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe User, :type => :model do
-  
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
   before(:all) do
     @user1 = create(:user)
   end
-  
-  it "is valid with valid attributes" do
+
+  it 'is valid with valid attributes' do
     expect(@user1).to be_valid
   end
 
@@ -14,6 +15,4 @@ RSpec.describe User, :type => :model do
     user2 = build(:user, login: nil)
     expect(user2).to_not be_valid
   end
-
-
 end
