@@ -5,10 +5,17 @@ class Api::V1::PostsController < ApplicationController
    render json: posts, status: 200
   end  
 
+  def top
+    @top_posts = Post.first.top_posts
+    
+    postswithratings = @top_posts.map{ |post| [post, post.avg_rating]}
+    render json: postswithratings, status: 200
+  end  
 
   def create
-    
-    @user = User.find_by(login: post_params[:login])
+  
+  
+    @user = User.find_by(login: params[:login])
    
     if @user 
 
@@ -35,14 +42,13 @@ class Api::V1::PostsController < ApplicationController
       render json: {error: "Error creating user"}
     end
 
-  end
+  end 
 
   private
   def post_params
     params.require(:post).permit([
       :title,
       :body,
-      :login,
       :ip
     ]) 
     end  

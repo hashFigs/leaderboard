@@ -20,7 +20,7 @@ class Api::V1::RatingsController < ApplicationController
     )
 
    if @rating.save 
-     render json: @rating, status: 200
+     render json: [@rating, @post.ratings.average(:value)], status: 200
    else
      render json: {error: @rating.errors.full_messages}
    end
